@@ -17,31 +17,7 @@ let Customer = (name) => {
         let rental = rentals[i];
 
         //noinspection Eslint
-        switch (rental.movie.priceCode) {
-          case Movie.REGULAR:
-
-            subTotal += 2;
-            if (rental.daysRented > 2) {
-              subTotal += (rental.daysRented - 2) * 1.5;
-            }
-            break;
-
-          case Movie.NEW_RELEASE:
-
-            subTotal += rental.daysRented * 3;
-            break;
-
-          case Movie.CHILDRENS:
-
-            subTotal += 1.5;
-            if (rental.daysRented > 3) {
-              subTotal += (rental.daysRented - 3) * 1.5;
-            }
-
-            break;
-          default:
-
-        }
+        subTotal = amountFor(rental, subTotal);
 
         // add frequent renter points
         frequentRenterPoints++;
@@ -67,3 +43,32 @@ let Customer = (name) => {
 };
 
 export {Customer as makeCustomerFrom};
+function amountFor(aRental) {
+  let result = 0;
+  switch (aRental.movie.priceCode) {
+    case Movie.REGULAR:
+
+      result += 2;
+      if (aRental.daysRented > 2) {
+        result += (aRental.daysRented - 2) * 1.5;
+      }
+      break;
+
+    case Movie.NEW_RELEASE:
+
+      result += aRental.daysRented * 3;
+      break;
+
+    case Movie.CHILDRENS:
+
+      result += 1.5;
+      if (aRental.daysRented > 3) {
+        result += (aRental.daysRented - 3) * 1.5;
+      }
+
+      break;
+    default:
+
+  }
+  return result;
+}
